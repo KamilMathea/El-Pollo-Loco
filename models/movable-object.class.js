@@ -28,12 +28,21 @@ class MovableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawFrame (ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = '5';
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    isColliding(MovableObject) {
+        return this.x + this.width > MovableObject.x &&
+            this.y + this.height > MovableObject.y &&
+            this.x < MovableObject.x &&
+            this.y < MovableObject.y + MovableObject.height;
     }
 
     loadImage(path) {
