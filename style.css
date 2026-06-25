@@ -14,6 +14,8 @@ body {
 
 canvas {
     background-color: black;
+    display: block;
+    
 }
 
 @font-face {
@@ -24,4 +26,22 @@ canvas {
 h1 {
     font-size: 48px;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100dvh;
+    }
+}
+
+@media only screen and (orientation: landscape) and (max-height: 625px) {
+    h1 {
+        display: none;
+    }
 }
