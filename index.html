@@ -31,6 +31,22 @@
 
     </canvas>
 
+    <button id="instruction-btn" onclick="openControls()">
+        instruction
+    </button>
+
+    <dialog id="controls-dialog" onclick="closeControlsOutside(event)">
+        <button onclick="closeControls()">X</button>
+        <div class="dialog-container">
+            <h2>INSTRUCTION</h2>
+            <ol>
+                <li><strong>left & right arrow key:</strong> walk</li>
+                <li><strong>space:</strong> jump</li>
+                <li><strong>D key:</strong> throw bottle</li>
+            </ol>
+    </dialog>
+    </div>
+
 </body>
 
 </html>
