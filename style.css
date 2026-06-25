@@ -1,9 +1,25 @@
 body {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
+    min-height: 100dvh;
+    margin: 0;
+    background-position: center;
+    background-image: url(img/5_background/website_bg/website-background1.jpg);
+    font-family: 'shortstack', Arial, Helvetica, sans-serif;
 }
 
 canvas {
     background-color: black;
+}
+
+@font-face {
+    font-family: 'shortstack';
+    src: url(font/short_stack/shortstack-regular.ttf);
+}
+
+h1 {
+    font-size: 48px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
