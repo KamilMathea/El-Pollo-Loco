@@ -1,15 +1,36 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let gameStarted = false
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    showStartScreen();
+}
 
-    console.log('my character is', world.character);
+function showStartScreen() {
+    let ctx = canvas.getContext('2d');
+    let img = new Image();
+    img.src = 'img/9_intro_outro_screens/start/startscreen_1.png';
+    
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+}
+
+function startGame() {
+    if (!gameStarted) {
+        gameStarted = true;
+        initLevel();
+        world = new World(canvas, keyboard);
+    }
 }
 
 window.addEventListener("keydown", (event) => {
+    if (event.keyCode == 13) {
+        startGame();
+    }
+    
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
