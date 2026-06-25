@@ -30,7 +30,7 @@ window.addEventListener("keydown", (event) => {
     if (event.keyCode == 13) {
         startGame();
     }
-    
+
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
@@ -80,4 +80,8 @@ window.addEventListener("keyup", (event) => {
     if (event.keyCode == 68) {
         keyboard.D = false;
     }
+});
+
+window.addEventListener("touchstart", () => {
+    startGame();
 });
