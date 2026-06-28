@@ -31,9 +31,15 @@
 
     </canvas>
 
-    <button id="instruction-btn" onclick="openControls()">
-        instruction
-    </button>
+    <div class="menu-buttons">
+        <button id="start-btn" onclick="startGame()" onkeydown="handleBtnKeyDown(event)">
+            start game
+        </button>
+
+        <button id="instruction-btn" onclick="openControls()" onkeydown="handleBtnKeyDown(event)">
+            instruction
+        </button>
+    </div>
 
     <dialog id="controls-dialog" onclick="closeControlsOutside(event)">
         <button onclick="closeControls()">X</button>
@@ -43,6 +49,7 @@
                 <li><strong>left & right arrow key:</strong> walk</li>
                 <li><strong>space:</strong> jump</li>
                 <li><strong>D key:</strong> throw bottle</li>
+                <li><strong>enter key:</strong> start game</li>
             </ol>
     </dialog>
     </div>
