@@ -25,6 +25,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkBossNearness();
         }, 200);
     }
 
@@ -42,6 +43,19 @@ class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    checkBossNearness() {
+        const boss = this.level.enemies.find(e => e instanceof Endboss);
+        
+        if (boss) {
+            const distance = boss.x - this.character.x;
+
+            if (distance < 500 && !boss.hadFirstContact) {
+                boss.hadFirstContact = true;
+                console.log("Der Endboss hat dich gesehen und wird wütend!");
+            }
+        }
     }
 
     draw() {
