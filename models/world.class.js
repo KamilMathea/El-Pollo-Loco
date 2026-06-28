@@ -53,7 +53,9 @@ class World {
 
             if (distance < 500 && !boss.hadFirstContact) {
                 boss.hadFirstContact = true;
-                console.log("Der Endboss hat dich gesehen und wird wütend!");
+            }
+            if (distance <  40 && boss.isAlertFinished) {
+                boss.triggerAttack();
             }
         }
     }
