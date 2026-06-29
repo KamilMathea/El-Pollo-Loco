@@ -26,6 +26,13 @@ function startGame() {
     }
 }
 
+function gameOver() {
+    document.getElementById('game-over-screen').classList.remove('hidden');
+    for (let i = 1; i < 9999; i++) {
+        window.clearInterval(i);
+    }
+}
+
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 13) {
         startGame();

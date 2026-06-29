@@ -40,6 +40,7 @@ class Character extends MovableObject {
     ];
 
     world;
+    deadFrameCounter = 0;
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -74,23 +75,23 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-            else if (this.isHurt()) {
+                if (this.deadFrameCounter < this.IMAGES_DEAD.length) {
+                    let path = this.IMAGES_DEAD[this.deadFrameCounter];
+                    this.img = this.imageCache[path];
+                    this.deadFrameCounter++;
+                } else {
+                    gameOver();
+                }
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
             else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         }, 50);
     }
-
-/*     jump() {
-        this.speedY = 30;
-    }
- */}
+}
