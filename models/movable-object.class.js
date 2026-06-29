@@ -5,6 +5,12 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    };
 
     applyGravity() {
         setInterval(() => {
@@ -35,7 +41,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 1;
+        return timepassed < 0.2;
     }
 
     isDead() {
@@ -43,10 +49,10 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(MovableObject) {
-        return this.x + this.width > MovableObject.x &&
-            this.y + this.height > MovableObject.y &&
-            this.x < MovableObject.x &&
-            this.y < MovableObject.y + MovableObject.height;
+        return this.x + this.width - this.offset.right > MovableObject.x + MovableObject.offset.left &&
+               this.y + this.height - this.offset.bottom > MovableObject.y + MovableObject.offset.top &&
+               this.x + this.offset.left < MovableObject.x + MovableObject.width - MovableObject.offset.right &&
+               this.y + this.offset.top < MovableObject.y + MovableObject.height - MovableObject.offset.bottom;
     }
 
     playAnimation(images) {

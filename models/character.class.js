@@ -48,6 +48,10 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.offset.top = 100;
+        this.offset.bottom = 15;
+        this.offset.left = 25;
+        this.offset.right = 25;
         this.applyGravity();
         this.animate();
     }
