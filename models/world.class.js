@@ -51,6 +51,7 @@ class World {
 
     checkCollisions() {
         this.checkEnemyCollisions();
+        this.checkBottleCollisions();
     }
 
     checkEnemyCollisions() {
@@ -84,6 +85,33 @@ class World {
                 }
             });
         }
+    }
+
+    checkBottleCollisions() {
+        this.throwableObjects.forEach((bottle) => {
+            if (!bottle.isBroken) {
+                this.level.enemies.forEach((enemy) => {
+                    if (this.isChicken(enemy) && !enemy.isDead && bottle.isColliding(enemy)) {
+                        enemy.isDead = true;
+                        bottle.splash();
+
+                        setTimeout(() => {
+                            let enemyIndex = this.level.enemies.indexOf(enemy);
+                            if (enemyIndex > -1) {
+                                this.level.enemies.splice(enemyIndex, 1);
+                            }
+                        }, 1000);
+
+                        setTimeout(() => {
+                            let bottleIndex = this.throwableObjects.indexOf(bottle);
+                            if (bottleIndex > -1) {
+                                this.throwableObjects.splice(bottleIndex, 1);
+                            }
+                        }, 300);
+                    }
+                });
+            }
+        });
     }
 
     executeEnemyJumpKill(enemy) {

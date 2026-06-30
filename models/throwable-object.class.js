@@ -15,6 +15,10 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    isBroken = false;
+    movementInterval;
+    rotationInterval;
+
     constructor(x, y) {
         super();
         this.loadImage('img/6_salsa_bottle/salsa_bottle.png');
@@ -31,12 +35,27 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             this.x += 10;
         }, 25);
 
-        setInterval(() => {
+        this.rotationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_ROTATION);
         }, 50);
+    }
+
+    splash() {
+        this.isBroken = true;
+        clearInterval(this.movementInterval);
+        clearInterval(this.rotationInterval);
+        this.speedY = 0;
+
+        let splashInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_SPLASH);
+        }, 50);
+
+        setTimeout(() => {
+            clearInterval(splashInterval);
+        }, 300);
     }
 }
