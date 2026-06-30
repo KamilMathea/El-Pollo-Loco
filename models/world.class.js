@@ -33,9 +33,15 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        if (this.keyboard.D && this.canThrow && this.character.ammo > 0) {
+            let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.character.ammo--;
+            this.canThrow = false;
+            this.character.resetIdleTimer();
+        }
+        if (!this.keyboard.D) {
+            this.canThrow = true;
         }
     }
 
@@ -46,14 +52,12 @@ class World {
     checkEnemyCollisions() {
         let dynamicKillExecuted = false;
 
-        // 1. Kills prüfen: Wenn Pepe fällt, tötet er ALLE Hühner, die er in diesem Frame berührt!
         this.level.enemies.forEach((enemy) => {
             if (this.isChicken(enemy) && !enemy.isDead && this.character.isColliding(enemy)) {
                 if (this.isPepeJumpingOnOnTop(enemy)) {
                     enemy.isDead = true;
                     dynamicKillExecuted = true;
 
-                    // Huhn nach 1 Sekunde aus dem Spiel entfernen
                     setTimeout(() => {
                         let index = this.level.enemies.indexOf(enemy);
                         if (index > -1) {
@@ -64,12 +68,10 @@ class World {
             }
         });
 
-        // Erst NACHDEM alle Kills des Frames berechnet wurden, bouncen wir Pepe nach oben
         if (dynamicKillExecuted) {
             this.character.speedY = 25;
         }
 
-        // 2. Schaden nur prüfen, wenn Pepe in diesem Frame KEIN Huhn gekillt hat
         if (!dynamicKillExecuted) {
             this.level.enemies.forEach((enemy) => {
                 if (!enemy.isDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
@@ -83,7 +85,6 @@ class World {
     executeEnemyJumpKill(enemy) {
         enemy.isDead = true;
 
-        // Das katapultiert Pepe sofort wieder nach oben und rettet ihn aus der Gruppe!
         this.character.speedY = 25;
 
         setTimeout(() => {
@@ -99,8 +100,6 @@ class World {
     }
 
     isPepeJumpingOnOnTop(enemy) {
-        // Solange Pepe sich in der Luft befindet und fällt oder landet (speedY <= 0),
-        // wird JEDER Kontakt von der Engine als tödlicher Sprung gewertet!
         return this.character.isAboveGround() && this.character.speedY <= 0;
     }
 
