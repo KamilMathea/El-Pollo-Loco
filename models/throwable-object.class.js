@@ -36,7 +36,7 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         
         this.movementInterval = setInterval(() => {
-            this.x += 10;
+            this.x += 5;
         }, 25);
 
         this.rotationInterval = setInterval(() => {

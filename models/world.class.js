@@ -80,7 +80,9 @@ class World {
 
         if (!dynamicKillExecuted) {
             this.level.enemies.forEach((enemy) => {
-                if (!enemy.isDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
+                let isActiveEnemy = (enemy instanceof Endboss && !enemy.isDead()) || (!enemy.isDead && this.isChicken(enemy));
+                
+                if (isActiveEnemy && this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                 }
@@ -91,41 +93,41 @@ class World {
     checkBottleCollisions() {
         this.throwableObjects.forEach((bottle) => {
             if (!bottle.isBroken) {
+                const boss = this.level.enemies.find(e => e instanceof Endboss);
+                if (boss && !boss.isDead() && bottle.isColliding(boss)) {
+                    bottle.isBroken = true;
+                    bottle.splash();
+                    boss.hit();
+                    this.bossStatusBar.setPercentage(boss.energy);
+
+                    setTimeout(() => {
+                        let bottleIndex = this.throwableObjects.indexOf(bottle);
+                        if (bottleIndex > -1) {
+                            this.throwableObjects.splice(bottleIndex, 1);
+                        }
+                    }, 300);
+                    return;
+                }
+
                 this.level.enemies.forEach((enemy) => {
-                    if (!enemy.isDead && bottle.isColliding(enemy)) {
+                    if (this.isChicken(enemy) && !enemy.isDead && bottle.isColliding(enemy)) {
+                        bottle.isBroken = true;
+                        enemy.isDead = true;
+                        bottle.splash();
 
-                        if (enemy instanceof Endboss) {
-                            bottle.splash();
-                            enemy.hit();
-                            this.bossStatusBar.setPercentage(enemy.energy);
+                        setTimeout(() => {
+                            let enemyIndex = this.level.enemies.indexOf(enemy);
+                            if (enemyIndex > -1) {
+                                this.level.enemies.splice(enemyIndex, 1);
+                            }
+                        }, 1000);
 
-                            setTimeout(() => {
-                                let bottleIndex = this.throwableObjects.indexOf(bottle);
-                                if (bottleIndex > -1) {
-                                    this.throwableObjects.splice(bottleIndex, 1);
-                                }
-                            }, 300);
-                        }
-
-                        else if (this.isChicken(enemy)) {
-                            enemy.isDead = true;
-                            bottle.splash();
-
-                            setTimeout(() => {
-                                let enemyIndex = this.level.enemies.indexOf(enemy);
-                                if (enemyIndex > -1) {
-                                    this.level.enemies.splice(enemyIndex, 1);
-                                }
-                            }, 1000);
-
-                            setTimeout(() => {
-                                let bottleIndex = this.throwableObjects.indexOf(bottle);
-                                if (bottleIndex > -1) {
-                                    this.throwableObjects.splice(bottleIndex, 1);
-                                }
-                            }, 300);
-                        }
-
+                        setTimeout(() => {
+                            let bottleIndex = this.throwableObjects.indexOf(bottle);
+                            if (bottleIndex > -1) {
+                                this.throwableObjects.splice(bottleIndex, 1);
+                            }
+                        }, 300);
                     }
                 });
             }
