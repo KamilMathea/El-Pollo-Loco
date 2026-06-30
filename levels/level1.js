@@ -38,6 +38,13 @@ function initLevel() {
             new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 720 * 3),
             new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 720 * 3),
             new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 720 * 3)
+        ],
+        [
+            new CollectibleBottle(300, 355, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+            new CollectibleBottle(600, 355, 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+            new CollectibleBottle(900, 355, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+            new CollectibleBottle(1300, 355, 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+            new CollectibleBottle(1700, 355, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
         ]
     );
 }

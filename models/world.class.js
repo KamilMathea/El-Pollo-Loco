@@ -53,6 +53,7 @@ class World {
     checkCollisions() {
         this.checkEnemyCollisions();
         this.checkBottleCollisions();
+        this.checkCollectibleCollisions();
     }
 
     checkEnemyCollisions() {
@@ -81,7 +82,7 @@ class World {
         if (!dynamicKillExecuted) {
             this.level.enemies.forEach((enemy) => {
                 let isActiveEnemy = (enemy instanceof Endboss && !enemy.isDead()) || (!enemy.isDead && this.isChicken(enemy));
-                
+
                 if (isActiveEnemy && this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -182,11 +183,25 @@ class World {
         }
     }
 
+    checkCollectibleCollisions() {
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                if (this.character.ammo < 5) {
+                    this.character.ammo++;
+                    this.level.bottles.splice(index, 1);
+                    let percentage = this.character.ammo * 20;
+                    this.bottleStatusBar.setPercentage(percentage);
+                }
+            }
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);
