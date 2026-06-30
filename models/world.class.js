@@ -7,6 +7,7 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     bottleStatusBar = new BottleStatusBar();
+    bossStatusBar = new BossStatusBar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -91,23 +92,40 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (!bottle.isBroken) {
                 this.level.enemies.forEach((enemy) => {
-                    if (this.isChicken(enemy) && !enemy.isDead && bottle.isColliding(enemy)) {
-                        enemy.isDead = true;
-                        bottle.splash();
+                    if (!enemy.isDead && bottle.isColliding(enemy)) {
 
-                        setTimeout(() => {
-                            let enemyIndex = this.level.enemies.indexOf(enemy);
-                            if (enemyIndex > -1) {
-                                this.level.enemies.splice(enemyIndex, 1);
-                            }
-                        }, 1000);
+                        if (enemy instanceof Endboss) {
+                            bottle.splash();
+                            enemy.hit();
+                            this.bossStatusBar.setPercentage(enemy.energy);
 
-                        setTimeout(() => {
-                            let bottleIndex = this.throwableObjects.indexOf(bottle);
-                            if (bottleIndex > -1) {
-                                this.throwableObjects.splice(bottleIndex, 1);
-                            }
-                        }, 300);
+                            setTimeout(() => {
+                                let bottleIndex = this.throwableObjects.indexOf(bottle);
+                                if (bottleIndex > -1) {
+                                    this.throwableObjects.splice(bottleIndex, 1);
+                                }
+                            }, 300);
+                        }
+
+                        else if (this.isChicken(enemy)) {
+                            enemy.isDead = true;
+                            bottle.splash();
+
+                            setTimeout(() => {
+                                let enemyIndex = this.level.enemies.indexOf(enemy);
+                                if (enemyIndex > -1) {
+                                    this.level.enemies.splice(enemyIndex, 1);
+                                }
+                            }, 1000);
+
+                            setTimeout(() => {
+                                let bottleIndex = this.throwableObjects.indexOf(bottle);
+                                if (bottleIndex > -1) {
+                                    this.throwableObjects.splice(bottleIndex, 1);
+                                }
+                            }, 300);
+                        }
+
                     }
                 });
             }
@@ -173,6 +191,10 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleStatusBar);
+        const boss = this.level.enemies.find(e => e instanceof Endboss);
+        if (boss && boss.hadFirstContact) {
+            this.addToMap(this.bossStatusBar);
+        }
 
         requestAnimationFrame(() => this.draw());
     }
