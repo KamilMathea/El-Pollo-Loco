@@ -12,8 +12,8 @@ function showStartScreen() {
     let ctx = canvas.getContext('2d');
     let img = new Image();
     img.src = 'img/9_intro_outro_screens/start/startscreen_1.png';
-    
-    img.onload = function() {
+
+    img.onload = function () {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     };
 }
@@ -28,6 +28,13 @@ function startGame() {
 
 function gameOver() {
     document.getElementById('game-over-screen').classList.remove('hidden');
+    for (let i = 1; i < 9999; i++) {
+        window.clearInterval(i);
+    }
+}
+
+function gameWon() {
+    document.getElementById('you-won-screen').classList.remove('hidden');
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
     }

@@ -81,6 +81,7 @@ class Endboss extends MovableObject {
                 } else {
                     let path = this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1];
                     this.img = this.imageCache[path];
+                    gameWon();
                 }
 
             } else if (this.isHurt()) {
