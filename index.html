@@ -34,16 +34,20 @@
 <body onload="init()">
     <h1>El Pollo Loco</h1>
 
-    <canvas id="canvas" width="720" height="480">
+    <div class="game-container">
+        <canvas id="canvas" width="720" height="480">
 
-    </canvas>
+        </canvas>
 
-    <div id="game-over-screen" class="hidden">
-        <img src="img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
-    </div>
+        <div id="game-over-screen" class="hidden">
+            <img src="img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
+            <button class="restart-btn" onclick="restartGame()">Play Again</button>
+        </div>
 
-    <div id="you-won-screen" class="hidden">
-        <img src="img/You won, you lost/You Won B.png" alt="You Won">
+        <div id="you-won-screen" class="hidden">
+            <img src="img/You won, you lost/You Won B.png" alt="You Won">
+            <button class="restart-btn" onclick="restartGame()">Play Again</button>
+        </div>
     </div>
 
     <div class="menu-buttons">

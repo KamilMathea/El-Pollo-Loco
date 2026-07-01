@@ -40,6 +40,13 @@ function gameWon() {
     }
 }
 
+function restartGame() {
+    document.getElementById('game-over-screen').classList.add('hidden');
+    document.getElementById('you-won-screen').classList.add('hidden');
+    gameStarted = false;
+    startGame();
+}
+
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 13) {
         startGame();

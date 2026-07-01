@@ -18,6 +18,11 @@ canvas {
     
 }
 
+.game-container {
+    position: relative;
+    box-sizing: border-box;
+}
+
 .menu-buttons {
     display: flex;
     justify-content: space-evenly;
@@ -40,7 +45,7 @@ canvas {
     transition: transform 0.1s ease;
 }
 
-#start-btn {
+#start-btn, .restart-btn {
     background-color: #459128;
     color: white;
 }
@@ -96,26 +101,53 @@ dialog li {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Leicht abgedunkelter Hintergrund */
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     z-index: 10;
+    border-radius: 4px;
 }
 
 #game-over-screen img, #you-won-screen img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Das Bild behält seine Proportionen */
+    max-width: 80%;
+    max-height: 60%;
+    object-fit: contain;
 }
 
-/* Versteckt den Screen standardmäßig */
 .hidden {
     display: none !important;
 }
 
+.restart-btn {
+    font-family: 'shortstack', sans-serif;
+    font-size: 18px;
+    padding: 8px 24px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border: 3px solid #000;
+    border-radius: 12px;
+    background-color: #ff9800;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 0px #000;
+    transition: all 0.1s ease;
+}
+
+.restart-btn:hover {
+    background-color: #f57c00;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 0px #000;
+}
+
+.restart-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0px 0px 0px #000;
+}
 
 @font-face {
     font-family: 'shortstack';
@@ -128,8 +160,9 @@ h1 {
 }
 
 @media only screen and (max-width: 720px) {
-    canvas {
+    canvas, #game-over-screen, #you-won-screen, .game-container {
         width: 100%;
+        height: auto;
     }
 }
 
