@@ -70,6 +70,7 @@ class Character extends MovableObject {
     lastActionTime = new Date().getTime();
     idleFrameCounter = 0;
     ammo = 5;
+    coins = 0;
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');

@@ -8,6 +8,7 @@ class World {
     statusBar = new StatusBar();
     bottleStatusBar = new BottleStatusBar();
     bossStatusBar = new BossStatusBar();
+    coinStatusBar = new CoinStatusBar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -54,6 +55,8 @@ class World {
         this.checkEnemyCollisions();
         this.checkBottleCollisions();
         this.checkCollectibleCollisions();
+        this.checkCoinCollisions();
+        this.checkShopPurchase();
     }
 
     checkEnemyCollisions() {
@@ -196,18 +199,45 @@ class World {
         });
     }
 
+    checkCoinCollisions() {
+        for (let i = this.level.coins.length - 1; i >= 0; i--) {
+            let coin = this.level.coins[i];
+
+            if (this.character.isColliding(coin)) {
+                if (this.character.coins < 5) {
+                    this.character.coins++;
+                    this.coinStatusBar.setPercentage(this.character.coins * 20);
+                    this.level.coins.splice(i, 1);
+                }
+            }
+        }
+    }
+
+    checkShopPurchase() {
+        if (this.keyboard.S && this.character.coins > 0 && this.character.ammo < 5) {
+            this.character.coins--;
+            this.character.ammo++;
+            this.coinStatusBar.setPercentage(this.character.coins * 20);
+            let percentage = this.character.ammo * 20;
+            this.bottleStatusBar.setPercentage(percentage);
+            this.keyboard.S = false;
+        }
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleStatusBar);
+        this.addToMap(this.coinStatusBar);
         const boss = this.level.enemies.find(e => e instanceof Endboss);
         if (boss && boss.hadFirstContact) {
             this.addToMap(this.bossStatusBar);

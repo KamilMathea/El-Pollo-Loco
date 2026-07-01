@@ -45,6 +45,14 @@ function initLevel() {
             new CollectibleBottle(900, 355, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
             new CollectibleBottle(1300, 355, 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
             new CollectibleBottle(1700, 355, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
+        ],
+        [
+            new Coin(400, 200),
+            new Coin(600, 150),
+            new Coin(800, 200),
+            new Coin(850, 120),
+            new Coin(1000, 150),
+            new Coin(1000, 200)
         ]
     );
 }
