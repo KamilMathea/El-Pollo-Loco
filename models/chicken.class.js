@@ -48,7 +48,7 @@ class Chicken extends MovableObject {
     playDeathSound() {
         if (!this.soundPlayed) {
             this.soundPlayed = true;
-            this.chicken_death_sound.play();
+            playSound(this.chicken_death_sound);
         }
     }
 }

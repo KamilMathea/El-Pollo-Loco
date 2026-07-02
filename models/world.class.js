@@ -93,7 +93,7 @@ class World {
                 if (isActiveEnemy && this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
-                    this.character.hurt_sound.play();
+                    playSound(this.character.hurt_sound);
                 }
             });
         }
@@ -197,7 +197,7 @@ class World {
                 if (this.character.ammo < 5) {
                     this.character.ammo++;
                     this.bottle_sound.currentTime = 0; 
-                    this.bottle_sound.play();
+                    playSound(this.bottle_sound);
                     this.level.bottles.splice(index, 1);
                     let percentage = this.character.ammo * 20;
                     this.bottleStatusBar.setPercentage(percentage);
@@ -215,7 +215,7 @@ class World {
                     this.character.coins++;
                     this.coinStatusBar.setPercentage(this.character.coins * 20);
                     this.coin_sound.currentTime = 0;
-                    this.coin_sound.play();
+                    playSound(this.coin_sound);
                     this.level.coins.splice(i, 1);
                 }
             }
@@ -230,7 +230,7 @@ class World {
             let percentage = this.character.ammo * 20;
             this.bottleStatusBar.setPercentage(percentage);
             this.bottle_sound.currentTime = 0;
-            this.bottle_sound.play();
+            playSound(this.bottle_sound);
             this.keyboard.S = false;
         }
     }

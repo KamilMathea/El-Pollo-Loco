@@ -47,7 +47,7 @@ class ThrowableObject extends MovableObject {
     }
 
     splash() {
-        this.break_sound.play();
+        playSound(this.break_sound);
         this.isBroken = true;
         clearInterval(this.movementInterval);
         clearInterval(this.rotationInterval);

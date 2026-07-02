@@ -98,7 +98,7 @@ class Endboss extends MovableObject {
             } else if (this.hadFirstContact && !this.isAlertFinished) {
                 if (!this.soundPlayed) {
                     this.soundPlayed = true;
-                    this.entrance_sound.play();
+                    playSound(this.entrance_sound);
                 }
                 if (alertFrameCounter < this.IMAGES_ALERT.length) {
                     let path = this.IMAGES_ALERT[alertFrameCounter];
@@ -128,7 +128,7 @@ class Endboss extends MovableObject {
         if (!this.isAttacking && this.isAlertFinished && !this.isDead() && !this.isHurt()) {
             this.isAttacking = true;
             this.attack_sound.currentTime = 0;
-            this.attack_sound.play();
+            playSound(this.attack_sound);
         }
     }
 
