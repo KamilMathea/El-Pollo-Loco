@@ -11,12 +11,14 @@ class World {
     coinStatusBar = new CoinStatusBar();
     throwableObjects = [];
     coin_sound = new Audio('audio/get_coin.mp3');
+    bottle_sound = new Audio('audio/get_bottle.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.coin_sound.volume = 0.2;
+        this.bottle_sound.volume = 0.2;
         this.setWorld();
         this.run();
         this.draw();
@@ -194,6 +196,8 @@ class World {
             if (this.character.isColliding(bottle)) {
                 if (this.character.ammo < 5) {
                     this.character.ammo++;
+                    this.bottle_sound.currentTime = 0; 
+                    this.bottle_sound.play();
                     this.level.bottles.splice(index, 1);
                     let percentage = this.character.ammo * 20;
                     this.bottleStatusBar.setPercentage(percentage);
