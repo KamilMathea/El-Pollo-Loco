@@ -18,6 +18,7 @@ class ThrowableObject extends MovableObject {
     isBroken = false;
     movementInterval;
     rotationInterval;
+    break_sound = new Audio('audio/bottle_breaks1.mp3');
 
     constructor(x, y) {
         super();
@@ -28,6 +29,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.break_sound.volume = 0.3;
         this.throw();
     }
 
@@ -45,6 +47,7 @@ class ThrowableObject extends MovableObject {
     }
 
     splash() {
+        this.break_sound.play();
         this.isBroken = true;
         clearInterval(this.movementInterval);
         clearInterval(this.rotationInterval);
