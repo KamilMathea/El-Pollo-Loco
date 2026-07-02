@@ -10,11 +10,13 @@ class World {
     bossStatusBar = new BossStatusBar();
     coinStatusBar = new CoinStatusBar();
     throwableObjects = [];
+    coin_sound = new Audio('audio/get_coin.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.coin_sound.volume = 0.2;
         this.setWorld();
         this.run();
         this.draw();
@@ -208,6 +210,8 @@ class World {
                 if (this.character.coins < 5) {
                     this.character.coins++;
                     this.coinStatusBar.setPercentage(this.character.coins * 20);
+                    this.coin_sound.currentTime = 0;
+                    this.coin_sound.play();
                     this.level.coins.splice(i, 1);
                 }
             }
