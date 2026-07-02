@@ -48,6 +48,8 @@ class Endboss extends MovableObject {
     isAlertFinished = false;
     isAttacking = false;
     speed = 0.5;
+    entrance_sound = new Audio('audio/endboss_entrance1.mp3');
+    soundPlayed = false;
 
     constructor() {
         super();
@@ -58,6 +60,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
+        this.entrance_sound.volume = 0.4;
         this.animate();
     }
 
@@ -91,6 +94,10 @@ class Endboss extends MovableObject {
                 this.loadImage('img/4_enemie_boss_chicken/1_walk/G1.png');
 
             } else if (this.hadFirstContact && !this.isAlertFinished) {
+                if (!this.soundPlayed) {
+                    this.soundPlayed = true;
+                    this.entrance_sound.play();
+                }
                 if (alertFrameCounter < this.IMAGES_ALERT.length) {
                     let path = this.IMAGES_ALERT[alertFrameCounter];
                     this.img = this.imageCache[path];
