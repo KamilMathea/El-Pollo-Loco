@@ -50,6 +50,7 @@ class Endboss extends MovableObject {
     speed = 0.5;
     entrance_sound = new Audio('audio/endboss_entrance1.mp3');
     soundPlayed = false;
+    attack_sound = new Audio('audio/endboss_attack_sound.mp3');
 
     constructor() {
         super();
@@ -61,6 +62,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
         this.entrance_sound.volume = 0.4;
+        this.attack_sound.volume = 0.4;
         this.animate();
     }
 
@@ -125,6 +127,8 @@ class Endboss extends MovableObject {
     triggerAttack() {
         if (!this.isAttacking && this.isAlertFinished && !this.isDead() && !this.isHurt()) {
             this.isAttacking = true;
+            this.attack_sound.currentTime = 0;
+            this.attack_sound.play();
         }
     }
 
