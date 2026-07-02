@@ -229,6 +229,8 @@ class World {
             this.coinStatusBar.setPercentage(this.character.coins * 20);
             let percentage = this.character.ammo * 20;
             this.bottleStatusBar.setPercentage(percentage);
+            this.bottle_sound.currentTime = 0;
+            this.bottle_sound.play();
             this.keyboard.S = false;
         }
     }
