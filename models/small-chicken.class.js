@@ -3,6 +3,8 @@ class SmallChicken extends MovableObject {
     height = 40;
     width = 50;
     isDead = false;
+    soundPlayed = false;
+    chicken_death_sound = new Audio('audio/regular_chicken_death1.mp3');
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -20,6 +22,7 @@ class SmallChicken extends MovableObject {
         this.offset.right = 2;
         this.x = 200 + Math.random() * 500;
         this.speed = 0.2 + Math.random() * 0.6;
+        this.chicken_death_sound.volume = 0.15;
         this.animate();
     }
 
@@ -35,7 +38,15 @@ class SmallChicken extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
                 this.loadImage(this.IMAGE_DEAD);
+                this.playDeathSound();
             }
         }, 200);
+    }
+
+    playDeathSound() {
+        if (!this.soundPlayed) {
+            this.soundPlayed = true;
+            this.chicken_death_sound.play();
+        }
     }
 }
