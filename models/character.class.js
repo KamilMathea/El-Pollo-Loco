@@ -71,6 +71,7 @@ class Character extends MovableObject {
     idleFrameCounter = 0;
     ammo = 5;
     coins = 0;
+    hurt_sound = new Audio('audio/pepe_get_dmg.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -84,6 +85,7 @@ class Character extends MovableObject {
         this.offset.bottom = 15;
         this.offset.left = 25;
         this.offset.right = 25;
+        this.hurt_sound.volume = 0.2;
         this.applyGravity();
         this.animate();
     }

@@ -89,6 +89,7 @@ class World {
                 if (isActiveEnemy && this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
+                    this.character.hurt_sound.play();
                 }
             });
         }
