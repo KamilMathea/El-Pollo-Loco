@@ -1,4 +1,5 @@
 function openControls() {
+    tryPlayIntro();
     const dialog = document.getElementById('controls-dialog');
     dialog.showModal();
 }
@@ -8,16 +9,12 @@ function closeControls() {
     dialog.close();
 }
 
-function startGame() {
+function handleStartGameClick() {
     const dialog = document.getElementById('controls-dialog');
 
     if (!gameStarted && !dialog.open) {
-        gameStarted = true;
-        
         document.querySelector('.menu-buttons').style.display = 'none';
-        
-        initLevel(); 
-        world = new World(canvas, keyboard); 
+        startGame();
     }
 }
 
@@ -29,11 +26,12 @@ function closeControlsOutside(event) {
 }
 
 function handleBtnKeyDown(event) {
+    tryPlayIntro();
     if (event.keyCode === 13) {
         event.preventDefault();
 
         if (event.target.id === 'start-btn') {
-            startGame();
+            handleStartGameClick();
         } else if (event.target.id === 'instruction-btn') {
             openControls();
         }

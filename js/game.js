@@ -6,10 +6,27 @@ let win_sound = new Audio('audio/game_won.mp3');
 win_sound.volume = 0.3;
 let lose_sound = new Audio('audio/game_over.mp3');
 lose_sound.volume = 0.3;
+let intro_music = new Audio('audio/bg_music_intro2.mp3');
+intro_music.volume = 0.15;
+intro_music.loop = true;
+
+let ingame_music = new Audio('audio/bg_music_ingame.mp3');
+ingame_music.volume = 0.15;
+ingame_music.loop = true;
 
 function init() {
     canvas = document.getElementById('canvas');
     showStartScreen();
+    tryPlayIntro();
+    window.addEventListener('click', tryPlayIntro, { once: true });
+    window.addEventListener('keydown', tryPlayIntro, { once: true });
+}
+
+function tryPlayIntro() {
+    if (!gameStarted && intro_music.paused) {
+        intro_music.play().catch(error => {
+        });
+    }
 }
 
 function showStartScreen() {
@@ -25,12 +42,17 @@ function showStartScreen() {
 function startGame() {
     if (!gameStarted) {
         gameStarted = true;
+        intro_music.pause();
+        intro_music.currentTime = 0;
+        ingame_music.play().catch(e => {});
         initLevel();
         world = new World(canvas, keyboard);
     }
 }
 
 function gameOver() {
+    ingame_music.pause();
+    ingame_music.currentTime = 0;
     lose_sound.play();
     document.getElementById('game-over-screen').classList.remove('hidden');
     for (let i = 1; i < 9999; i++) {
@@ -39,6 +61,8 @@ function gameOver() {
 }
 
 function gameWon() {
+    ingame_music.pause();
+    ingame_music.currentTime = 0;
     win_sound.play();
     document.getElementById('you-won-screen').classList.remove('hidden');
     for (let i = 1; i < 9999; i++) {
@@ -54,6 +78,12 @@ function restartGame() {
     document.getElementById('game-over-screen').classList.add('hidden');
     document.getElementById('you-won-screen').classList.add('hidden');
     gameStarted = false;
+    intro_music = new Audio('audio/bg_music_intro2.mp3');
+    intro_music.volume = 0.15;
+    intro_music.loop = true;
+    ingame_music = new Audio('audio/bg_music_ingame.mp3');
+    ingame_music.volume = 0.15;
+    ingame_music.loop = true;
     startGame();
 }
 
