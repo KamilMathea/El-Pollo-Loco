@@ -2,6 +2,10 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameStarted = false
+let win_sound = new Audio('audio/game_won.mp3');
+win_sound.volume = 0.3;
+let lose_sound = new Audio('audio/game_over.mp3');
+lose_sound.volume = 0.3;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -27,6 +31,7 @@ function startGame() {
 }
 
 function gameOver() {
+    lose_sound.play();
     document.getElementById('game-over-screen').classList.remove('hidden');
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
@@ -34,6 +39,7 @@ function gameOver() {
 }
 
 function gameWon() {
+    win_sound.play();
     document.getElementById('you-won-screen').classList.remove('hidden');
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
@@ -41,6 +47,10 @@ function gameWon() {
 }
 
 function restartGame() {
+    win_sound.pause();
+    win_sound.currentTime = 0;
+    lose_sound.pause();
+    lose_sound.currentTime = 0;
     document.getElementById('game-over-screen').classList.add('hidden');
     document.getElementById('you-won-screen').classList.add('hidden');
     gameStarted = false;
